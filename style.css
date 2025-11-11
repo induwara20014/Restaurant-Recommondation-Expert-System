@@ -1,0 +1,114 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #555;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box; /* Important for padding/border calculation */
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 25px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.results-box {
+    margin-top: 30px;
+    padding: 20px;
+    border: 2px solid #4CAF50;
+    background-color: #f9fff9;
+    border-radius: 8px;
+    min-height: 50px;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #2c3e50;
+}
+
+.results-box:hover {
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+    transform: translateY(-2px);
+}
+
+.results-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: #4CAF50;
+    opacity: 0.7;
+}
+
+.results-box p {
+    margin: 0 0 10px 0;
+}
+
+.results-box strong {
+    color: #1a7f1f;
+    font-weight: 600;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.results-box.show {
+    animation: fadeIn 0.5s ease forwards;
+}
