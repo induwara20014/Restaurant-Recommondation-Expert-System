@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Recommender Expert System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ Restaurant Recommender Expert System</h1>
+        <p>Welcome! Tell us your preferences and we'll find the perfect match.</p>
+
+        <form id="recommendationForm">
+            <label for="style">1. Style:</label>
+            <select id="style" required>
+                <option value="">-- Select Cuisine --</option>
+                <option value="indian">Indian</option>
+                <option value="italian">Italian</option>
+                <option value="japanese">Japanese</option>
+                <option value="sri_lankan">Sri Lankan</option>
+                <option value="veg">Vegetarian-focused</option>
+                <option value="street_food">Street Food</option>
+                <option value="dessert">Dessert</option>
+            </select>
+
+            <label for="taste">2. Taste Preference:</label>
+            <select id="taste" required>
+                <option value="">-- Select Taste --</option>
+                <option value="spicy">Spicy</option>
+                <option value="mild">Mild</option>
+                <option value="sweet">Sweet</option>
+            </select>
+
+            <label for="budget">3. Budget Level:</label>
+            <select id="budget" required>
+                <option value="">-- Select Budget --</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+
+            <label for="type">4. Dietary Type:</label>
+            <select id="type" required>
+                <option value="">-- Select Type --</option>
+                <option value="veg">Vegetarian</option>
+                <option value="non_veg">Non-Vegetarian</option>
+            </select>
+
+            <button type="submit">Get Recommendations</button>
+        </form>
+
+        <div id="results" class="results-box">
+            </div>
+    </div>
+
+    <script>
+        document.getElementById('recommendationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const style = document.getElementById('style').value;
+            const taste = document.getElementById('taste').value;
+            const budget = document.getElementById('budget').value;
+            const type = document.getElementById('type').value;
+
+            try {
+                const response = await fetch('/recommend', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        style: style,
+                        taste: taste,
+                        budget: budget,
+                        type: type
+                    })
+                });
+
+                const data = await response.json();
+                const resultsDiv = document.getElementById('results');
+
+                if (data.restaurants && data.restaurants.length > 0) {
+                    resultsDiv.innerHTML = `
+                        <h3>Recommended Restaurants:</h3>
+                        <div class="reasoning">
+                            Because you prefer ${style} style, ${taste} taste, ${budget} budget, and ${type} food:
+                        </div>
+                        ${data.restaurants.map(restaurant => 
+                            `<div class="restaurant-item">→ ${restaurant}</div>`
+                        ).join('')}
+                    `;
+                } else {
+                    resultsDiv.innerHTML = '<p class="error">Sorry, no restaurants match your preferences.</p>';
+                }
+            } catch (error) {
+                document.getElementById('results').innerHTML = 
+                    '<p class="error">Sorry, there was an error getting recommendations.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
